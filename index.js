@@ -45,37 +45,47 @@ const bookStore = {
 
 // Write your code here!
 
-// Step 1: Select the <h1> element with id="header" and save it to a variable
-const bookStoreTitle = document.getElementById('header');
-// Update its text to the store's name from the bookStore object
-bookStoreTitle.textContent = bookStore.name;
+1. //HEADER MANIPULATION
+ //Points to the <h1> by ID and updates it with the store name.
 
-// Step 2: Select the <ul> with id="book-list" — this is where we'll add each book
-const bookList = document.getElementById('book-list');
+const mainHeader = document.querySelector('#header');
+mainHeader.textContent = bookStore.name;
 
-// Step 3: Loop through every book in the bookStore.books array
+/**
+ * 2. SELECT THE CONTAINER & CLEANUP
+ * Finds the <ul> where books live and removes the static example.
+ */
+const bookList = document.querySelector('#book-list');
+const placeholder = document.querySelector('#delete-this');
+
+if (placeholder) {
+    placeholder.remove();
+}
+
+/**
+ * 3. DYNAMIC RENDERING
+ * Loops through the library to build and append book cards.
+ */
 bookStore.books.forEach(book => {
-    // Create an <li> to act as a container for each book's info
-    const bookContainer = document.createElement('li');
+    // Create the list item wrapper
+    const li = document.createElement('li');
 
-    // Create an <h3> for the book title and set its text
-    const bookTitle = document.createElement('h3');
-    bookTitle.textContent = book.title;
+    // Create and fill the Title
+    const h3 = document.createElement('h3');
+    h3.textContent = book.title;
 
-    // Create a <p> for the author name and set its text
-    const bookAuthor = document.createElement('p');
-    bookAuthor.textContent = book.author;
+    // Create and fill the Author
+    const p = document.createElement('p');
+    p.textContent = book.author;
 
-    // Create an <img> for the book cover and set its src to the image URL
-    const bookImage = document.createElement('img');
-    bookImage.src = book.imageUrl;
+    // Create and configure the Image
+    const img = document.createElement('img');
+    img.src = book.imageUrl;
+    img.alt = book.title;
 
-    // Nest the title, author, and image inside the <li> container
-    bookContainer.append(bookTitle, bookAuthor, bookImage);
+    // ASSEMBLE: Add elements to the li in order
+    li.append(h3, p, img);
 
-    // Add the completed <li> for this book into the <ul> on the page
-    bookList.append(bookContainer);
+    // ATTACH: Add the finished li to the book-list <ul>
+    bookList.append(li);
 });
-
-// Step 4 (Bonus): Remove the placeholder <li id="delete-this"> from the DOM
-document.getElementById('delete-this').remove();
